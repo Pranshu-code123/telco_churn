@@ -1,0 +1,48 @@
+CREATE TABLE customers_raw (
+    customerID        VARCHAR(20),
+    gender            VARCHAR(10),
+    SeniorCitizen     TINYINT,
+    Partner           VARCHAR(3),
+    Dependents        VARCHAR(3),
+    tenure            INT,
+    PhoneService      VARCHAR(3),
+    MultipleLines     VARCHAR(30),
+    InternetService   VARCHAR(20),
+    OnlineSecurity    VARCHAR(30),
+    OnlineBackup      VARCHAR(30),
+    DeviceProtection  VARCHAR(30),
+    TechSupport       VARCHAR(30),
+    StreamingTV       VARCHAR(30),
+    StreamingMovies   VARCHAR(30),
+    Contract          VARCHAR(20),
+    PaperlessBilling  VARCHAR(3),
+    PaymentMethod     VARCHAR(30),
+    MonthlyCharges    DECIMAL(8,2),
+    TotalCharges      VARCHAR(20),
+    Churn             VARCHAR(3)
+);
+
+CREATE TABLE customers AS
+SELECT
+    customerID                                  AS customer_id,
+    gender,
+    SeniorCitizen                               AS senior_citizen,
+    Partner                                     AS partner,
+    Dependents                                  AS dependents,
+    tenure                                      AS tenure_months,
+    PhoneService                                AS phone_service,
+    MultipleLines                               AS multiple_lines,
+    InternetService                             AS internet_service,
+    OnlineSecurity                              AS online_security,
+    OnlineBackup                                AS online_backup,
+    DeviceProtection                            AS device_protection,
+    TechSupport                                 AS tech_support,
+    StreamingTV                                 AS streaming_tv,
+    StreamingMovies                             AS streaming_movies,
+    Contract                                    AS contract,
+    PaperlessBilling                            AS paperless_billing,
+    PaymentMethod                               AS payment_method,
+    MonthlyCharges                              AS monthly_charges,
+    CAST(NULLIF(TRIM(TotalCharges), '') AS DECIMAL(10,2)) AS total_charges,
+    CASE WHEN Churn = 'Yes' THEN 1 ELSE 0 END   AS churned
+FROM customers_raw;
