@@ -1,8 +1,11 @@
+DROP VIEW IF EXISTS customer_rfm;
+
 CREATE VIEW customer_rfm AS
 SELECT
     customer_id,
     tenure_months,
     monthly_charges,
+    total_charges,
     contract,
     payment_method,
     internet_service,
